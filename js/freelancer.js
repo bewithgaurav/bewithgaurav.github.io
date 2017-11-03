@@ -1,5 +1,5 @@
 // Freelancer Theme JavaScript
-
+document.body.style.zoom="75%"
 (function($) {
     "use strict"; // Start of use strict
 
