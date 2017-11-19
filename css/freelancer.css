@@ -229,6 +229,10 @@ section.success {
   background: #0b0733;
   color: white;
 }
+section.resume {
+  background: #000000;
+  color: white;
+}
 @media (max-width: 767px) {
   section {
     padding: 75px 0;
