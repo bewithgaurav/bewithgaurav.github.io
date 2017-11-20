@@ -22,7 +22,7 @@ $(function() {
                 firstName = name.split(' ').slice(0, -1).join(' ');
             }
             $.ajax({
-                url: "https://mailserver-gaurav.000webhostapp.com/contact_me.php",
+                url: "https://mailserver-gaurav.000webhostapp.com/mail_server.php",
                 type: "POST",
                 data: {
                     name: name,
