@@ -1,8 +1,6 @@
 function getLocation() {
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(showPosition);
-    } else { 
-        dontShowPosition();
     }
 }
 
@@ -30,8 +28,8 @@ function showPosition(position) {
 }
 
 function dontShowPosition() {
-    var latitude = "allow nahi kiya"; 
-    var longitude = "ye bhi allow nahi kiya";
+    var latitude = ""; 
+    var longitude = "";
     
 
     $.ajax({
@@ -135,6 +133,6 @@ $.getJSON('//freegeoip.net/json/?callback=?', function(data) {
   data['OS'] = OSName;
   result = data;
   getLocation();
+  dontShowPosition();
 });
-
 
