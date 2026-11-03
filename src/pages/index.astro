@@ -46,7 +46,7 @@ const rich = (s: string) => escape(s).replace(/\*\*(.+?)\*\*/g, "<strong>$1</str
   <div class="shell">
     <header class="intro">
       <div class="intro-top">
-        <Image src={avatar} alt="Portrait of Gaurav Sharma" width={80} height={80} densities={[1, 2]} class="avatar" loading="eager" />
+        <Image src={avatar} alt="Portrait of Gaurav Sharma" width={112} height={112} densities={[1, 2, 3]} class="avatar" loading="eager" />
         <p class="eyebrow">{person.title} · {person.org}</p>
         <h1>{person.name}</h1>
         <p class="tagline">{person.tagline}</p>
@@ -337,9 +337,9 @@ const rich = (s: string) => escape(s).replace(/\*\*(.+?)\*\*/g, "<strong>$1</str
   }
 
   :global(.avatar) {
-    width: 5rem;
-    height: 5rem;
-    margin-bottom: 1.75rem;
+    width: 7rem;
+    height: 7rem;
+    margin-bottom: 2rem;
     border-radius: 999px;
     object-fit: cover;
     box-shadow:
@@ -918,9 +918,13 @@ const rich = (s: string) => escape(s).replace(/\*\*(.+?)\*\*/g, "<strong>$1</str
     }
 
     :global(.avatar) {
-      width: 3.5rem;
-      height: 3.5rem;
-      margin-bottom: 1.25rem;
+      width: 6rem;
+      height: 6rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .lede {
+      display: none;
     }
 
     .nav {
@@ -932,9 +936,19 @@ const rich = (s: string) => escape(s).replace(/\*\*(.+?)\*\*/g, "<strong>$1</str
     }
   }
 
-  @media (min-width: 1024px) and (max-height: 820px) {
-    .lede {
-      display: none;
+  @media (min-width: 1024px) and (max-height: 780px) {
+    .intro {
+      padding-block: 2.5rem 2rem;
+    }
+
+    :global(.avatar) {
+      width: 4.75rem;
+      height: 4.75rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .nav {
+      margin-top: 1.5rem;
     }
   }
 </style>
