@@ -11,8 +11,9 @@ export const person = {
   org: "Microsoft",
   team: "Azure SQL Drivers",
   location: "Pune, India",
-  tagline: "Python and C++ engineer, from database drivers to production AI.",
-  intro: "Core maintainer of mssql-python, Microsoft's open-source Python driver for SQL Server.",
+  tagline: "Software engineer building fast database infrastructure and production AI.",
+  intro:
+    "Core maintainer of mssql-python at Microsoft. Shipped production LLM features in 2022; today, a production multi-agent system at work and a real-time voice assistant of my own.",
   email: "gauravsharma2696@gmail.com",
   github: "https://github.com/bewithgaurav",
   linkedin: "https://www.linkedin.com/in/bewithgaurav",
@@ -25,8 +26,8 @@ const repo = {
 };
 
 export const about = [
-  "Eight years in, my work now sits where Python meets C++. I took mssql-python from pre-release to 1.0 GA, I keep making it faster, and it sees ~3M downloads a month.",
-  "I also ship AI, from a production multi-agent system at Microsoft to a real-time voice assistant of my own. Before Microsoft: fintech backend at Fyle, LLM features at Letterdrop in 2022, and four years of sound-quality R&D at HARMAN, including a year in Japan.",
+  "I work on two things: the layer where Python meets C++ and SQL Server, and production AI. At Microsoft I'm a core maintainer of mssql-python, taken from pre-release to 1.0 GA and now at ~3M downloads a month, and I designed and shipped a production multi-agent system. Outside work I run Buddy, a real-time voice assistant I built.",
+  "The path here wasn't straight: competitive programming, four years of automotive sound-quality R&D at HARMAN, LLM features in 2022, then fintech backend. The sound years stuck. Training as a JBL listener means structured A/B testing and distrust of any result that only looks good, and that maps directly onto how I do performance work.",
 ];
 
 export const stack = [
@@ -153,6 +154,9 @@ export const openSource: Card[] = [
   },
 ];
 
+export const aiLede =
+  "I shipped production LLM features in 2022, well before they were commonplace. Today that means a production multi-agent system at Microsoft, agentic code review in the driver repositories, and a real-time voice assistant I built and run.";
+
 export const ai: Card[] = [
   {
     name: "Production multi-agent system",
@@ -165,19 +169,9 @@ export const ai: Card[] = [
     tags: ["Copilot Studio", "MCP", "Power Automate", "Microsoft Teams"],
   },
   {
-    name: "Perf Police",
-    context: "Open source · mssql-python",
-    body: "An agentic performance-review workflow composing reusable code-review, native-performance-review and profiler-operation skills, for ownership and lifetime checks, bounded profiling, raw timelines and paired comparisons. It complements advisory benchmark reports with human-reviewed evidence, rather than making merge decisions.",
-    points: [
-      "Also built executable AI review probes, a shared code-review skill, path-scoped agent instructions and Copilot prompts into the driver repositories.",
-    ],
-    tags: ["AI code review", "Agent skills", "Profiling"],
-    links: [{ label: "mssql-python#776", href: `${repo.mssqlPython}/pull/776` }],
-  },
-  {
     name: "Buddy",
     context: "Voice-first AI assistant · 2025 to now",
-    body: "A production speech-to-speech pipeline I built and operate on managed APIs, bridging phone (G.711 μ-law, 8 kHz) and browser (PCM16, 24 kHz) calls over WebSockets to Azure OpenAI GPT-Realtime. It has per-path VAD tuning, noise reduction, barge-in with debounced playback cancellation, per-user routing to a managed fallback, and a write-ahead transcript log with restart-safe delivery. Validated at 1,283.5 ms median and 1,418 ms p95 time to first audio.",
+    body: "A real-time voice assistant I built and operate on managed APIs. Phone (G.711 μ-law, 8 kHz) and browser (PCM16, 24 kHz) audio stream over WebSockets to Azure OpenAI GPT-Realtime, with per-path VAD tuning, noise reduction, barge-in and a write-ahead transcript log. Validated at 1,283.5 ms median and 1,418 ms p95 time to first audio.",
     points: [
       "Traced Whisper hallucinations on non-speech input (echo, wind, traffic) to their root causes, including one that produced a false safety refusal, and eliminated them.",
       "Designed five-layer long-term memory, assembled per call to balance recall against latency and cost.",
@@ -188,10 +182,26 @@ export const ai: Card[] = [
     tags: ["Azure OpenAI Realtime", "Whisper", "Twilio Media Streams", "WebSockets", "AudioWorklet", "FastAPI"],
   },
   {
+    name: "Perf Police",
+    context: "Open source · mssql-python",
+    body: "An agentic performance-review workflow composing reusable code-review, native-performance-review and profiler-operation skills, for ownership and lifetime checks, bounded profiling, raw timelines and paired comparisons. It complements advisory benchmark reports with human-reviewed evidence, rather than making merge decisions.",
+    points: [
+      "Also built executable AI review probes, a shared code-review skill, path-scoped agent instructions and Copilot prompts into the driver repositories.",
+    ],
+    tags: ["AI code review", "Agent skills", "Profiling"],
+    links: [{ label: "mssql-python#776", href: `${repo.mssqlPython}/pull/776` }],
+  },
+  {
     name: "Self-hosted LLM agent platform",
     context: "Independent · 2025 to now",
     body: "A multi-model gateway routing across several providers, plus always-on agents, on a small Azure fleet with a split public/private network plane, held within a fixed monthly cost cap.",
     tags: ["Azure", "Docker", "Tailscale", "MCP", "LLM APIs"],
+  },
+  {
+    name: "Sales-call insights and editor autocomplete",
+    context: "Letterdrop · 2022",
+    body: "Led a customer-critical initiative extracting insights from sales-call transcripts with Python/Flask and the OpenAI APIs, and integrated OpenAI-powered autocomplete into the CMS platform's content editor.",
+    tags: ["OpenAI APIs", "Python", "Flask"],
   },
 ];
 
@@ -204,14 +214,24 @@ export type Role = {
   points: string[];
 };
 
-export type Job = { org: string; href?: string; roles: Role[] };
+export type Chapter = {
+  when: string;
+  where: string;
+  theme: string;
+  story: string;
+  roles: (Role & { org: string })[];
+};
 
-export const experience: Job[] = [
+export const chapters: Chapter[] = [
   {
-    org: "Microsoft",
-    href: "https://www.microsoft.com",
+    when: "2024 to now",
+    where: "Microsoft",
+    theme: "A driver at scale, and agents",
+    story:
+      "Core maintainer of mssql-python and release owner for mssql-django: performance, reliability, security and releases for a driver at ~3M downloads a month, alongside a production multi-agent system.",
     roles: [
       {
+        org: "Microsoft",
         title: "Software Development Engineer II",
         team: "Azure SQL Drivers",
         start: "Jul 2024",
@@ -224,28 +244,27 @@ export const experience: Job[] = [
           "**Adversarial testing:** built a bug-hunting framework combining differential testing against a reference driver, runtime sanitizers (ASan, UBSan, LSan, TSan) and coverage-guided fuzzing, which surfaced 18 real defects, 5 critical, in a single session.",
           "**Security and identity:** delivered Entra ID authentication and extended it to bulk copy; added security compiler options, CodeQL scanning and parser-based connection-string sanitization; led SDL compliance onboarding and wrote the playbook sibling drivers now follow.",
           "**Reliability:** hardened cursor, connection, pool and interpreter-shutdown cleanup against segfaults, and built a logging framework bridging the Python and C++ layers.",
-          "**Community:** scoped community-reported defects with enough design context that external contributors could land fixes independently, in one case within a day.",
+          "**Community:** scoped community-reported and out-of-scope defects with enough design context that external contributors could pick them up independently; in one case a community contributor opened a fix within a day.",
         ],
       },
     ],
   },
   {
-    org: "HappyFox",
-    href: "https://www.happyfox.com",
+    when: "2023 to 2024",
+    where: "Fyle, HappyFox",
+    theme: "Fintech and BI backend",
+    story:
+      "Owned critical features for Visa and Mastercard Real-Time Feeds and the Budgets module at Fyle, and took my turn on Kubernetes deploys across Indian and US clusters. Then backend work on HappyFox's Business Intelligence platform.",
     roles: [
       {
+        org: "HappyFox",
         title: "Backend Engineer",
         start: "May 2024",
         end: "Jul 2024",
         points: ["Backend development for the Business Intelligence product platform (Python/Django, PostgreSQL)."],
       },
-    ],
-  },
-  {
-    org: "Fyle",
-    href: "https://www.fylehq.com",
-    roles: [
       {
+        org: "Fyle",
         title: "Member of Technical Staff 3",
         team: "Corporate Cards",
         start: "Jan 2023",
@@ -259,16 +278,20 @@ export const experience: Job[] = [
     ],
   },
   {
-    org: "Letterdrop",
-    href: "https://letterdrop.com",
+    when: "2022 to 2023",
+    where: "Letterdrop",
+    theme: "LLMs in production, early",
+    story:
+      "A remote full-stack role at a B2B content platform, where I shipped LLM features on the OpenAI APIs in 2022.",
     roles: [
       {
+        org: "Letterdrop",
         title: "Full Stack Developer",
         location: "Remote",
         start: "Aug 2022",
         end: "Jan 2023",
         points: [
-          "Led a customer-critical initiative extracting insights from sales-call transcripts with Python/Flask and the OpenAI APIs: production LLM work in 2022.",
+          "Led a customer-critical initiative extracting insights from sales-call transcripts with Python/Flask and the OpenAI APIs.",
           "Integrated OpenAI-powered autocomplete into the CMS platform's content editor.",
           "Delivered full-stack features on the MERN stack with Heroku, Doppler and serverless GCP Functions.",
         ],
@@ -276,10 +299,14 @@ export const experience: Job[] = [
     ],
   },
   {
-    org: "HARMAN International",
-    href: "https://www.harman.com",
+    when: "2018 to 2022",
+    where: "HARMAN International",
+    theme: "Where software met sound",
+    story:
+      "Joined through the LEAP leadership program and spent four years between code and acoustics: R&D platforms and listener tools in Python and Django, study software for OEMs including Toyota/Lexus and Subaru during a year in Nagoya, Car Audio Benchmarking India, and training as a JBL listener.",
     roles: [
       {
+        org: "HARMAN",
         title: "Engineer II, Software & Acoustics Engineering",
         location: "Pune",
         start: "Dec 2020",
@@ -290,6 +317,7 @@ export const experience: Job[] = [
         ],
       },
       {
+        org: "HARMAN",
         title: "LEAP Engineer, Experiential R&D",
         location: "Nagoya, Japan",
         start: "Nov 2019",
@@ -300,6 +328,7 @@ export const experience: Job[] = [
         ],
       },
       {
+        org: "HARMAN",
         title: "LEAP Engineer, Software & Acoustics Engineering",
         location: "Pune",
         start: "Jun 2018",
@@ -311,26 +340,60 @@ export const experience: Job[] = [
       },
     ],
   },
+  {
+    when: "2014 to 2018",
+    where: "NIT Raipur",
+    theme: "Problem solving",
+    story:
+      "B.Tech in Information Technology. ACM ICPC regional qualifier in 2015 and 2017 with the college-topper team, 500+ problems solved across HackerEarth, CodeChef and HackerRank, and the website for the first edition of CodeUtsava, the college's annual CS festival.",
+    roles: [
+      {
+        org: "Equiphunt",
+        title: "Backend Developer Intern",
+        location: "Hyderabad",
+        start: "May 2017",
+        end: "Jul 2017",
+        points: ["Designed the database and built APIs for a Lead Management System with 10+ user roles (PHP, MySQL)."],
+      },
+      {
+        org: "Aspiring Minds",
+        title: "Code Evaluator Intern",
+        start: "May 2016",
+        end: "Aug 2016",
+        points: ["Evaluated 1,000+ C++ and Java algorithm and data-structure submissions for clarity and efficiency."],
+      },
+      {
+        org: "CodeUtsava, NIT Raipur",
+        title: "Web Developer & Organizer",
+        start: "Dec 2016",
+        end: "Feb 2018",
+        points: [
+          "Built the official website for the first edition (Python Flask, MySQL), then joined the core committee for the second, handling sponsorships, onsite technical operations and problem statements.",
+          "Problem setter for HackerEarth's Breaking Code 1.0 and 2.0 and Narcodes contests, and author of problem editorials.",
+        ],
+      },
+    ],
+  },
 ];
 
-export const earlier = [
+export const offKeyboard = "Away from the keyboard: a trained JBL listener, and a lifelong musician and guitarist.";
+
+export const principles = [
   {
-    org: "Equiphunt",
-    title: "Backend Developer Intern",
-    when: "2017",
-    text: "Designed the database and built APIs for a Lead Management System with 10+ user roles (PHP, MySQL).",
+    title: "Measure before believing",
+    text: "I treat a measurement as untrustworthy until the experiment is sound. When agreement across paired runs is weak, I mark the result inconclusive, and I invest in variance reduction rather than report a flattering number.",
   },
   {
-    org: "Aspiring Minds",
-    title: "Code Evaluator Intern",
-    when: "2016",
-    text: "Evaluated 1,000+ C++ and Java algorithm and data-structure submissions for clarity and efficiency.",
+    title: "Fix the cause",
+    text: "I trace defects to their architectural root cause. When a workaround is the right call, it still names the cause and tracks it separately.",
   },
   {
-    org: "CodeUtsava, NIT Raipur",
-    title: "Web Developer & Organizer",
-    when: "2016 to 2018",
-    text: "Built the official website for the first edition of the annual CS festival, then joined the core committee for the second, handling sponsorships, onsite technical operations and problem statements.",
+    title: "Scope tightly, hand off well",
+    text: "I don't grow a change mid-flight. Out-of-scope defects get filed with enough design context that someone else can pick them up; in one case a community contributor opened a fix within a day.",
+  },
+  {
+    title: "AI inside the workflow",
+    text: "I build AI review automation into the engineering workflow, like agentic performance review that adds human-reviewed evidence to benchmark reports rather than making merge decisions.",
   },
 ];
 
@@ -339,17 +402,6 @@ export const skills = [
   {
     label: "Systems",
     items: ["CPython C API", "PyBind11", "ODBC", "Concurrency and GIL management", "Memory safety"],
-  },
-  {
-    label: "Performance and quality",
-    items: [
-      "Profiling and instrumentation",
-      "Benchmark design",
-      "Regression detection",
-      "Differential testing",
-      "Coverage-guided fuzzing",
-      "ASan/UBSan/LSan/TSan",
-    ],
   },
   {
     label: "AI and agents",
@@ -368,35 +420,29 @@ export const skills = [
     items: ["Real-time speech-to-speech", "Streaming STT and TTS", "Whisper", "VAD and barge-in tuning", "Twilio Media Streams"],
   },
   {
+    label: "Performance and quality",
+    items: [
+      "Profiling and instrumentation",
+      "Benchmark design",
+      "Regression detection",
+      "Differential testing",
+      "Coverage-guided fuzzing",
+      "ASan/UBSan/LSan/TSan",
+    ],
+  },
+  {
+    label: "Web and data",
+    items: ["Django", "Flask", "FastAPI", "React", "SQL Server", "PostgreSQL", "MongoDB", "MySQL", "SQLAlchemy"],
+  },
+  {
     label: "Build, cloud and security",
     items: ["CMake", "cibuildwheel", "Azure DevOps", "GitHub Actions", "Docker", "Kubernetes", "Azure", "Entra ID", "OAuth", "CodeQL"],
   },
-  {
-    label: "Data and frameworks",
-    items: ["SQL Server", "PostgreSQL", "MongoDB", "MySQL", "Django", "SQLAlchemy", "FastAPI", "Flask", "React"],
-  },
 ];
 
-export const beyond = [
-  {
-    title: "B.Tech, Information Technology",
-    detail: "National Institute of Technology, Raipur · 2014 to 2018",
-  },
-  {
-    title: "ACM ICPC regional qualifier, 2015 and 2017",
-    detail: "College-topper team both years, competing at the Chennai and Gwalior regionals.",
-  },
-  {
-    title: "Competitive programming",
-    detail:
-      "500+ problems solved and 200+ contests across HackerEarth, CodeChef and HackerRank, with several top-20 placements. Problem setter for HackerEarth's Breaking Code 1.0 and 2.0 and Narcodes.",
-  },
-  {
-    title: "HARMAN LEAP leadership program",
-    detail: "Selected into the program, including a one-year international rotation in Japan.",
-  },
-  {
-    title: "Away from the keyboard",
-    detail: "Trained JBL listener, and a lifelong musician and guitarist.",
-  },
+export const highlights = [
+  { value: "~3M", label: "mssql-python downloads a month" },
+  { value: "21x", label: "faster write path" },
+  { value: "2022", label: "LLM features shipped at Letterdrop" },
+  { value: "1.28s", label: "validated p50 first audio, voice AI" },
 ];

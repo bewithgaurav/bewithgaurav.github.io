@@ -2,7 +2,7 @@ import { readFile } from "node:fs/promises";
 import type { APIRoute } from "astro";
 import satori from "satori";
 import { Resvg } from "@resvg/resvg-js";
-import { person, benchmarks } from "../data/site";
+import { person, highlights } from "../data/site";
 
 const font = (pkg: string, weight: number) =>
   readFile(`node_modules/@fontsource/${pkg}/files/${pkg}-latin-${weight}-normal.woff`);
@@ -26,7 +26,7 @@ export const GET: APIRoute = async () => {
     font("geist-mono", 500),
   ]);
 
-  const pills = benchmarks.map((b) =>
+  const pills = highlights.map((b) =>
     h(
       "div",
       {
@@ -40,8 +40,8 @@ export const GET: APIRoute = async () => {
         flex: 1,
         boxSizing: "border-box",
       },
-      h("div", { fontFamily: "Geist Mono", fontSize: 34, color: accent, letterSpacing: -1 }, b.speedup),
-      h("div", { fontSize: 20, color: muted }, b.name.toLowerCase()),
+      h("div", { fontFamily: "Geist Mono", fontSize: 34, color: accent, letterSpacing: -1 }, b.value),
+      h("div", { fontSize: 20, color: muted }, b.label),
     ),
   );
 
