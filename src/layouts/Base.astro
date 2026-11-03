@@ -28,7 +28,7 @@ const jsonLd = {
   worksFor: { "@type": "Organization", name: person.org },
   alumniOf: { "@type": "CollegeOrUniversity", name: "National Institute of Technology, Raipur" },
   address: { "@type": "PostalAddress", addressLocality: "Pune", addressCountry: "IN" },
-  sameAs: [person.github, person.linkedin],
+  sameAs: [person.github, person.linkedin, person.substack],
   knowsAbout: ["Python", "C++", "Django", "Flask", "SQL Server", "Database drivers", "Performance engineering", "AI agents"],
 };
 ---
@@ -44,8 +44,7 @@ const jsonLd = {
     <link rel="canonical" href={canonical} />
     {noindex && <meta name="robots" content="noindex" />}
 
-    <meta name="theme-color" content="#f6f5f1" media="(prefers-color-scheme: light)" />
-    <meta name="theme-color" content="#0b0c0f" media="(prefers-color-scheme: dark)" />
+    <meta name="theme-color" content="#0b0c0f" />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
 

@@ -9,9 +9,8 @@ import Icon from "./Icon.astro";
 
 <script>
   const root = document.documentElement;
-  const dark = matchMedia("(prefers-color-scheme: dark)");
   document.querySelector(".theme-toggle")?.addEventListener("click", () => {
-    const current = root.dataset.theme ?? (dark.matches ? "dark" : "light");
+    const current = root.dataset.theme ?? "dark";
     const next = current === "dark" ? "light" : "dark";
     root.dataset.theme = next;
     try {
@@ -46,20 +45,8 @@ import Icon from "./Icon.astro";
     display: none;
   }
 
-  :global(:root[data-theme="dark"]) .sun,
+  :global(:root:not([data-theme="light"])) .sun,
   :global(:root[data-theme="light"]) .moon {
     display: block;
-  }
-
-  @media (prefers-color-scheme: dark) {
-    :global(:root:not([data-theme])) .sun {
-      display: block;
-    }
-  }
-
-  @media (prefers-color-scheme: light) {
-    :global(:root:not([data-theme])) .moon {
-      display: block;
-    }
   }
 </style>

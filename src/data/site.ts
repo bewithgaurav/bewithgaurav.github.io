@@ -17,6 +17,7 @@ export const person = {
   email: "gauravsharma2696@gmail.com",
   github: "https://github.com/bewithgaurav",
   linkedin: "https://www.linkedin.com/in/bewithgaurav",
+  substack: "https://bewithgaurav.substack.com",
   url: "https://bewithgaurav.github.io",
 };
 

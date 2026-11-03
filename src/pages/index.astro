@@ -74,6 +74,9 @@ const rich = (s: string) => escape(s).replace(/\*\*(.+?)\*\*/g, "<strong>$1</str
             <a href={person.linkedin} target="_blank" rel="noopener me" aria-label="LinkedIn"><Icon name="linkedin" /></a>
           </li>
           <li>
+            <a href={person.substack} target="_blank" rel="noopener me" aria-label="Substack"><Icon name="substack" /></a>
+          </li>
+          <li>
             <a href={`mailto:${person.email}`} aria-label="Email"><Icon name="mail" /></a>
           </li>
           <li><ThemeToggle /></li>
@@ -246,10 +249,16 @@ const rich = (s: string) => escape(s).replace(/\*\*(.+?)\*\*/g, "<strong>$1</str
             Email is the fastest way to reach me. I'm happy to talk about database drivers, Python and C++
             performance, Django, or agent infrastructure. My résumé is available on request.
           </p>
+          <p class="contact-lede">
+            I'm also starting to write on <a class="link" href={person.substack} target="_blank" rel="noopener"
+              >Substack</a
+            >, about Python performance, database drivers and agentic infrastructure.
+          </p>
           <p class="contact-actions">
             <a class="button primary" href={`mailto:${person.email}`}><Icon name="mail" size={16} /> {person.email}</a>
             <a class="button" href={person.linkedin} target="_blank" rel="noopener"><Icon name="linkedin" size={16} /> LinkedIn</a>
             <a class="button" href={person.github} target="_blank" rel="noopener"><Icon name="github" size={16} /> GitHub</a>
+            <a class="button" href={person.substack} target="_blank" rel="noopener"><Icon name="substack" size={16} /> Substack</a>
           </p>
         </div>
       </Section>

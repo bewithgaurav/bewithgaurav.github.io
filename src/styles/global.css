@@ -1,5 +1,5 @@
 :root {
-  color-scheme: light dark;
+  color-scheme: dark;
 
   --bg: light-dark(#f6f5f1, #0b0c0f);
   --surface: light-dark(#ffffff, #121419);
