@@ -26,7 +26,7 @@ const repo = {
 };
 
 export const about = [
-  "I work on two things: the layer where Python meets C++ and SQL Server, and production AI. At Microsoft I'm a core maintainer of mssql-python, taken from pre-release to 1.0 GA and now at ~3M downloads a month, and I designed and shipped a production multi-agent system. Outside work I run Buddy, a real-time voice assistant I built.",
+  "I work on two things: the layer where Python meets C++ and SQL Server, and production AI. At Microsoft I'm a core maintainer of mssql-python, taken from pre-release to 1.0 GA and now at ~3M downloads a month, and I designed and shipped a production multi-agent system. Outside work I run Buddy, a real-time voice assistant I built, and a live data product that AI coding agents build under my direction.",
   "The path here wasn't straight: competitive programming, four years of automotive sound-quality R&D at HARMAN, LLM features in 2022, then fintech backend. The sound years stuck. Training as a JBL listener means structured A/B testing and distrust of any result that only looks good, and that maps directly onto how I do performance work.",
 ];
 
@@ -47,9 +47,14 @@ export const stack = [
     where: "Fyle, HappyFox, HARMAN, Letterdrop, mssql-django",
   },
   {
+    layer: "Agents",
+    items: ["GitHub Copilot", "Copilot Studio", "MCP", "Agent skills", "Hermes Agent", "OpenClaw"],
+    where: "Microsoft, independent projects",
+  },
+  {
     layer: "AI",
-    items: ["Copilot Studio", "MCP", "Azure OpenAI Realtime", "OpenAI APIs", "Whisper"],
-    where: "Microsoft, Buddy, Letterdrop",
+    items: ["Azure OpenAI Realtime", "OpenAI APIs", "Whisper", "Vision LLMs"],
+    where: "Buddy, Letterdrop, independent product",
   },
 ];
 
@@ -155,7 +160,7 @@ export const openSource: Card[] = [
 ];
 
 export const aiLede =
-  "I shipped production LLM features in 2022, well before they were commonplace. Today that means a production multi-agent system at Microsoft, agentic code review in the driver repositories, and a real-time voice assistant I built and run.";
+  "I shipped production LLM features in 2022, well before they were commonplace. Today that means a production multi-agent system at Microsoft, agentic code review in the driver repositories, a real-time voice assistant, and a self-hosted fleet of agents.";
 
 export const ai: Card[] = [
   {
@@ -188,20 +193,72 @@ export const ai: Card[] = [
     points: [
       "Also built executable AI review probes, a shared code-review skill, path-scoped agent instructions and Copilot prompts into the driver repositories.",
     ],
-    tags: ["AI code review", "Agent skills", "Profiling"],
+    tags: ["AI code review", "Agent skills", "GitHub Copilot", "Profiling"],
     links: [{ label: "mssql-python#776", href: `${repo.mssqlPython}/pull/776` }],
   },
   {
-    name: "Self-hosted LLM agent platform",
+    name: "Self-hosted agent platform",
     context: "Independent · 2025 to now",
-    body: "A multi-model gateway routing across several providers, plus always-on agents, on a small Azure fleet with a split public/private network plane, held within a fixed monthly cost cap.",
-    tags: ["Azure", "Docker", "Tailscale", "MCP", "LLM APIs"],
+    body: "Always-on, Slack-connected agents on two frameworks: OpenClaw on a small Azure VM, and Hermes Agent on my Mac as an orchestrator plus per-project agents, each with its own model and skills. Scheduled reporting jobs, an OpenAI-compatible multi-model gateway, and a split public/private network over Tailscale.",
+    tags: ["OpenClaw", "Hermes Agent", "Slack", "MCP", "Tailscale", "Azure"],
   },
   {
     name: "Sales-call insights and editor autocomplete",
     context: "Letterdrop · 2022",
     body: "Led a customer-critical initiative extracting insights from sales-call transcripts with Python/Flask and the OpenAI APIs, and integrated OpenAI-powered autocomplete into the CMS platform's content editor.",
     tags: ["OpenAI APIs", "Python", "Flask"],
+  },
+];
+
+export const productLede =
+  "An independent product I run as a one-person team. AI coding agents propose and build; I set direction and approve architecture, production deploys and anything sent to users.";
+
+export const product: Card = {
+  name: "A live real-estate data product",
+  context: "Independent · 2026 to now",
+  body: "Turns a public real-estate registry into a readable change feed. It re-syncs tracked records daily, diffs them for material changes, and extracts tables from filed PDFs with a vision LLM, all built by agents working under written ground rules.",
+  points: [
+    "Two-tier diff engine: 10 typed handlers plus a recursive JSON catch-all, behind a noise filter that hides ~49k meaningless legacy change rows from public reads and cut the noisiest record's history from 20 rows to 3.",
+    "Vision-LLM extraction renders filed PDFs to page images and pulls unit-level tables, with versioned prompts loaded at runtime; 749 rows extracted across 3 projects by June 2026.",
+    "Per-task git worktrees, tracker issues synced both ways with GitHub, repository agent instructions, and pytest CI on every push and pull request, with the suite growing from 39 test functions when CI was added (Aug 2026) to 683 (Oct 2026).",
+    "Approval gates in the agents' ground rules, plus independent read-only reviewer agents that caught real defects green tests had missed.",
+    "One small Azure VM runs production and an isolated staging environment, with Cloudflare in front of an origin that refuses direct HTTP(S), a tailnet-only admin and deploy plane, and a graceful reload that passed 90 of 90 route checks.",
+  ],
+  tags: ["Agentic development", "Hermes Agent", "OpenClaw", "FastAPI", "SQLite", "Vision LLMs", "Cloudflare", "Azure"],
+};
+
+export const takeaways = [
+  {
+    title: "Prove every route has a handler",
+    text: "A dispatcher sent some cases away from its fallback to handlers that didn't exist, and a whole class of changes stayed invisible for months. Guard that invariant with a test.",
+  },
+  {
+    title: "Invest by volume times relevance",
+    text: "The most common, most user-relevant change type sat in the generic catch-all while a 22-row type had a dedicated handler.",
+  },
+  {
+    title: "Check the join before declaring data lost",
+    text: "Names on legacy rows looked unrecoverable. 1,957 of 1,957 resolved through a key back to the stored raw payload.",
+  },
+  {
+    title: "Passing tests are not a review",
+    text: "Independent reviewer agents rejected real defects in changes whose suites were green, so high-risk changes get a separate reviewer.",
+  },
+  {
+    title: "Fixtures should look like the source",
+    text: "Convenient invented fixtures hid a real extraction failure; source-shaped ones, down to key-absent versus null, caught it before deploy.",
+  },
+  {
+    title: "Make the gentle deploy the default",
+    text: "One avoidable restart cost 69 seconds and 46 HTTP 502s. A graceful reload then passed 90 of 90 route checks.",
+  },
+  {
+    title: "Ambiguous is not failed",
+    text: "When a delivery provider's result is unclear, hold it and reconcile with evidence. An automatic retry risks a duplicate send.",
+  },
+  {
+    title: "Schema lives in migrations",
+    text: "A self-healing ALTER at startup split the source of truth. Schema belongs in numbered migrations that record their own ledger entry.",
   },
 ];
 
@@ -219,7 +276,7 @@ export type Chapter = {
   where: string;
   theme: string;
   story: string;
-  roles: (Role & { org: string })[];
+  roles?: (Role & { org: string })[];
 };
 
 export const chapters: Chapter[] = [
@@ -248,6 +305,13 @@ export const chapters: Chapter[] = [
         ],
       },
     ],
+  },
+  {
+    when: "2025 to now",
+    where: "Independent",
+    theme: "Agents, voice and a product",
+    story:
+      "Outside work: Buddy, my real-time voice assistant; a self-hosted agent platform on OpenClaw and Hermes Agent; and a live real-estate data product that AI coding agents build under my direction.",
   },
   {
     when: "2023 to 2024",
@@ -392,8 +456,8 @@ export const principles = [
     text: "I don't grow a change mid-flight. Out-of-scope defects get filed with enough design context that someone else can pick them up; in one case a community contributor opened a fix within a day.",
   },
   {
-    title: "AI inside the workflow",
-    text: "I build AI review automation into the engineering workflow, like agentic performance review that adds human-reviewed evidence to benchmark reports rather than making merge decisions.",
+    title: "Agents propose, a human decides",
+    text: "On my own product, AI coding agents propose and build while I approve architecture, pushes, production deploys and anything sent to users. At work, agentic performance review adds human-reviewed evidence rather than making merge decisions.",
   },
 ];
 
@@ -404,13 +468,24 @@ export const skills = [
     items: ["CPython C API", "PyBind11", "ODBC", "Concurrency and GIL management", "Memory safety"],
   },
   {
-    label: "AI and agents",
+    label: "Agentic frameworks",
     items: [
-      "Multi-agent orchestration",
+      "GitHub Copilot",
       "Microsoft Copilot Studio",
       "Model Context Protocol (MCP)",
+      "Agent skills",
+      "Hermes Agent",
+      "OpenClaw",
+      "Reviewer agents and approval gates",
+    ],
+  },
+  {
+    label: "AI",
+    items: [
+      "Multi-agent orchestration",
       "LLM memory and context engineering",
       "Retrieval evaluation",
+      "Vision LLM extraction",
       "Azure OpenAI",
       "OpenAI APIs",
     ],
@@ -432,11 +507,11 @@ export const skills = [
   },
   {
     label: "Web and data",
-    items: ["Django", "Flask", "FastAPI", "React", "SQL Server", "PostgreSQL", "MongoDB", "MySQL", "SQLAlchemy"],
+    items: ["Django", "Flask", "FastAPI", "React", "SQL Server", "PostgreSQL", "SQLite", "MongoDB", "MySQL", "SQLAlchemy"],
   },
   {
     label: "Build, cloud and security",
-    items: ["CMake", "cibuildwheel", "Azure DevOps", "GitHub Actions", "Docker", "Kubernetes", "Azure", "Entra ID", "OAuth", "CodeQL"],
+    items: ["CMake", "cibuildwheel", "Azure DevOps", "GitHub Actions", "Docker", "Kubernetes", "Azure", "Cloudflare", "Entra ID", "OAuth", "CodeQL"],
   },
 ];
 

@@ -17,6 +17,9 @@ import {
   openSource,
   aiLede,
   ai,
+  productLede,
+  product,
+  takeaways,
   chapters,
   offKeyboard,
   principles,
@@ -26,6 +29,7 @@ import {
 const nav = [
   { id: "about", label: "About" },
   { id: "ai", label: "AI & agents" },
+  { id: "product", label: "Building with agents" },
   { id: "performance", label: "Performance" },
   { id: "open-source", label: "Open source" },
   { id: "path", label: "The path so far" },
@@ -109,6 +113,22 @@ const rich = (s: string) => escape(s).replace(/\*\*(.+?)\*\*/g, "<strong>$1</str
         </div>
       </Section>
 
+      <Section id="product" title="Building with agents">
+        <p class="section-lede">{productLede}</p>
+        <Card card={product} />
+        <h3 class="subhead eyebrow">What it taught me</h3>
+        <ul class="takeaways">
+          {
+            takeaways.map((t) => (
+              <li>
+                <h4>{t.title}</h4>
+                <p>{t.text}</p>
+              </li>
+            ))
+          }
+        </ul>
+      </Section>
+
       <Section id="performance" title="Performance" note="lower is better">
         <p class="section-lede">Three speedups I shipped, each measured on a stated workload, with the code linked.</p>
         <div class="stack-list">
@@ -148,6 +168,7 @@ const rich = (s: string) => escape(s).replace(/\*\*(.+?)\*\*/g, "<strong>$1</str
                   <h3 class="theme">{c.theme}</h3>
                   <p class="where-at eyebrow">{c.where}</p>
                   <p class="story">{c.story}</p>
+                  {c.roles && (
                   <details>
                     <summary>{c.roles.length === 1 ? "Role and highlights" : `${c.roles.length} roles and highlights`}</summary>
                     <ol class="roles">
@@ -175,6 +196,7 @@ const rich = (s: string) => escape(s).replace(/\*\*(.+?)\*\*/g, "<strong>$1</str
                       ))}
                     </ol>
                   </details>
+                  )}
                 </div>
               </li>
             ))
@@ -305,7 +327,7 @@ const rich = (s: string) => escape(s).replace(/\*\*(.+?)\*\*/g, "<strong>$1</str
     }
   }
 
-  @media (min-width: 1024px) and (min-height: 720px) {
+  @media (min-width: 1024px) and (min-height: 740px) {
     .intro {
       position: sticky;
       top: 0;
@@ -724,6 +746,44 @@ const rich = (s: string) => escape(s).replace(/\*\*(.+?)\*\*/g, "<strong>$1</str
     padding-top: 1.25rem;
     border-top: 1px dashed var(--border);
     font-size: 0.9375rem;
+    color: var(--muted);
+  }
+
+  .subhead {
+    margin: 2.25rem 0 1rem;
+  }
+
+  .takeaways {
+    display: grid;
+    gap: 1px;
+    overflow: hidden;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    background: var(--border);
+  }
+
+  @media (min-width: 640px) {
+    .takeaways {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  .takeaways li {
+    display: grid;
+    gap: 0.375rem;
+    align-content: start;
+    padding: 1.125rem 1.25rem;
+    background: var(--surface);
+  }
+
+  .takeaways h4 {
+    margin: 0;
+    font-size: 0.9375rem;
+    font-weight: 600;
+  }
+
+  .takeaways p {
+    font-size: 0.875rem;
     color: var(--muted);
   }
 
