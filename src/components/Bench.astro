@@ -1,0 +1,165 @@
+---
+import type { Benchmark } from "../data/site";
+
+interface Props {
+  bench: Benchmark;
+}
+
+const { bench } = Astro.props;
+const afterPct = Math.max((bench.after.value / bench.before.value) * 100, 1.25);
+---
+
+<article class="bench">
+  <header>
+    <div>
+      <h3>{bench.name}</h3>
+      <p class="metric">{bench.metric}</p>
+    </div>
+    <p class="speedup" aria-label={`${bench.speedup} faster`}>{bench.speedup}</p>
+  </header>
+
+  <dl class="bars">
+    <div class="row">
+      <dt>before</dt>
+      <dd>
+        <span class="track" aria-hidden="true"><span class="bar before" style="--w: 100%"></span></span>
+        <span class="value">{bench.before.label}</span>
+      </dd>
+    </div>
+    <div class="row">
+      <dt>after</dt>
+      <dd>
+        <span class="track" aria-hidden="true"><span class="bar after" style={`--w: ${afterPct.toFixed(2)}%`}></span></span>
+        <span class="value">{bench.after.label}</span>
+      </dd>
+    </div>
+  </dl>
+
+  <p class="detail">{bench.detail}</p>
+  <a class="arrow-link" href={bench.link.href} target="_blank" rel="noopener">{bench.link.label}</a>
+</article>
+
+<style>
+  .bench {
+    display: grid;
+    gap: 1.125rem;
+    padding: 1.5rem;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    background: var(--surface);
+    transition: border-color 0.25s var(--ease);
+  }
+
+  .bench:hover {
+    border-color: var(--border-strong);
+  }
+
+  header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+
+  h3 {
+    font-size: 1rem;
+    font-weight: 600;
+  }
+
+  .metric {
+    font-family: var(--font-mono);
+    font-size: 0.8125rem;
+    color: var(--faint);
+  }
+
+  .speedup {
+    font-family: var(--font-mono);
+    font-size: 2rem;
+    font-weight: 600;
+    line-height: 1;
+    letter-spacing: -0.03em;
+    color: var(--accent);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .bars {
+    display: grid;
+    gap: 0.5rem;
+    margin: 0;
+  }
+
+  .row {
+    display: grid;
+    grid-template-columns: 3.25rem 1fr;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  dt {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--faint);
+  }
+
+  dd {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 4.5rem;
+    align-items: center;
+    gap: 0.75rem;
+    margin: 0;
+  }
+
+  .track,
+  .bar {
+    display: block;
+  }
+
+  .bar {
+    width: var(--w);
+    height: 0.625rem;
+    border-radius: 999px;
+    transform-origin: left center;
+  }
+
+  .before {
+    background: var(--bar-before);
+  }
+
+  .after {
+    background: var(--accent);
+  }
+
+  .value {
+    font-family: var(--font-mono);
+    font-size: 0.8125rem;
+    font-variant-numeric: tabular-nums;
+    text-align: right;
+    white-space: nowrap;
+    color: var(--muted);
+  }
+
+  .row:last-child .value {
+    color: var(--text);
+  }
+
+  .detail {
+    font-size: 0.9375rem;
+    color: var(--muted);
+  }
+
+  @supports (animation-timeline: view()) {
+    @media (prefers-reduced-motion: no-preference) {
+      .bar {
+        animation: grow linear both;
+        animation-timeline: view();
+        animation-range: entry 20% cover 40%;
+      }
+    }
+  }
+
+  @keyframes grow {
+    from {
+      transform: scaleX(0);
+    }
+  }
+</style>

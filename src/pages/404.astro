@@ -1,0 +1,62 @@
+---
+import Base from "../layouts/Base.astro";
+import { person } from "../data/site";
+---
+
+<Base title={`Not found · ${person.name}`} noindex>
+  <main id="content" class="nf">
+    <pre class="query"><span class="kw">SELECT</span> * <span class="kw">FROM</span> pages <span class="kw">WHERE</span> path = @path;
+
+<span class="dim">(0 rows affected)</span></pre>
+    <h1>This page doesn't exist.</h1>
+    <p>The query ran fine. There was just nothing to return.</p>
+    <a class="link" href="/">Back to {person.name}</a>
+  </main>
+</Base>
+
+<style>
+  .nf {
+    display: grid;
+    align-content: center;
+    gap: 1rem;
+    min-height: 100vh;
+    min-height: 100dvh;
+    max-width: 40rem;
+    margin: 0 auto;
+    padding: 2rem 1.5rem;
+  }
+
+  .query {
+    margin: 0 0 1rem;
+    padding: 1.25rem 1.5rem;
+    overflow-x: auto;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    background: var(--surface);
+    font-family: var(--font-mono);
+    font-size: 0.875rem;
+    line-height: 1.7;
+  }
+
+  .kw {
+    color: var(--accent);
+  }
+
+  .dim {
+    color: var(--faint);
+  }
+
+  h1 {
+    font-size: 2rem;
+    font-weight: 650;
+    letter-spacing: -0.03em;
+  }
+
+  p {
+    color: var(--muted);
+  }
+
+  a {
+    justify-self: start;
+  }
+</style>

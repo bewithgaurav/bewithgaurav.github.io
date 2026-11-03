@@ -1,0 +1,792 @@
+---
+import { Image } from "astro:assets";
+import Base from "../layouts/Base.astro";
+import Section from "../components/Section.astro";
+import Bench from "../components/Bench.astro";
+import Card from "../components/Card.astro";
+import Icon from "../components/Icon.astro";
+import ThemeToggle from "../components/ThemeToggle.astro";
+import avatar from "../assets/avatar.png";
+import {
+  person,
+  about,
+  stack,
+  scale,
+  scaleAsOf,
+  benchmarks,
+  openSource,
+  ai,
+  experience,
+  earlier,
+  skills,
+  beyond,
+} from "../data/site";
+
+const nav = [
+  { id: "about", label: "About" },
+  { id: "benchmarks", label: "Benchmarks" },
+  { id: "open-source", label: "Open source" },
+  { id: "ai", label: "AI & agents" },
+  { id: "experience", label: "Experience" },
+  { id: "skills", label: "Skills" },
+  { id: "beyond", label: "Beyond" },
+  { id: "contact", label: "Contact" },
+];
+
+const escape = (s: string) => s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+const rich = (s: string) => escape(s).replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>");
+---
+
+<Base>
+  <div class="shell">
+    <header class="intro">
+      <div class="intro-top">
+        <Image src={avatar} alt="Portrait of Gaurav Sharma" width={72} height={72} densities={[1, 2]} class="avatar" loading="eager" />
+        <p class="eyebrow">{person.title} · {person.org}</p>
+        <h1>{person.name}</h1>
+        <p class="tagline">{person.tagline}</p>
+        <p class="lede">{person.intro}</p>
+
+        <nav aria-label="Sections" class="nav">
+          <ol>
+            {
+              nav.map((n) => (
+                <li>
+                  <a href={`#${n.id}`}>{n.label}</a>
+                </li>
+              ))
+            }
+          </ol>
+        </nav>
+      </div>
+
+      <div class="intro-foot">
+        <ul class="socials">
+          <li>
+            <a href={person.github} target="_blank" rel="noopener me" aria-label="GitHub"><Icon name="github" /></a>
+          </li>
+          <li>
+            <a href={person.linkedin} target="_blank" rel="noopener me" aria-label="LinkedIn"><Icon name="linkedin" /></a>
+          </li>
+          <li>
+            <a href={`mailto:${person.email}`} aria-label="Email"><Icon name="mail" /></a>
+          </li>
+          <li><ThemeToggle /></li>
+        </ul>
+        <p class="eyebrow">{person.location}</p>
+      </div>
+    </header>
+
+    <main id="content">
+      <Section id="about" title="About">
+        <div class="prose">
+          {about.map((p) => <p>{p}</p>)}
+        </div>
+
+        <figure class="stack">
+          <figcaption class="eyebrow">The stack I work across</figcaption>
+          <ol>
+            {
+              stack.map((s) => (
+                <li>
+                  <span class="layer">{s.layer}</span>
+                  <span class="items">{s.items.join(" · ")}</span>
+                </li>
+              ))
+            }
+          </ol>
+        </figure>
+
+        <ul class="scale" aria-label="mssql-python and contribution numbers">
+          {
+            scale.map((s) => {
+              const Tag = s.href ? "a" : "div";
+              return (
+                <li>
+                  <Tag class="stat" {...(s.href ? { href: s.href, target: "_blank", rel: "noopener" } : {})}>
+                    <span class="stat-value">{s.value}</span>
+                    <span class="stat-label">{s.label}</span>
+                  </Tag>
+                </li>
+              );
+            })
+          }
+        </ul>
+        <p class="eyebrow asof">Public numbers, verified {scaleAsOf}</p>
+      </Section>
+
+      <Section id="benchmarks" title="Benchmarks" note="lower is better">
+        <p class="section-lede">
+          Four speedups I shipped, each measured on a stated workload, with the code linked.
+        </p>
+        <div class="stack-list">
+          {benchmarks.map((b) => <Bench bench={b} />)}
+        </div>
+      </Section>
+
+      <Section id="open-source" title="Open source">
+        <div class="stack-list">
+          {openSource.map((c) => <Card card={c} />)}
+        </div>
+      </Section>
+
+      <Section id="ai" title="AI & agents">
+        <div class="stack-list">
+          {ai.map((c) => <Card card={c} />)}
+        </div>
+      </Section>
+
+      <Section id="experience" title="Experience">
+        <ol class="timeline">
+          {
+            experience.map((job) => (
+              <li class="job">
+                <h3 class="org">
+                  {job.href ? (
+                    <a class="link" href={job.href} target="_blank" rel="noopener">
+                      {job.org}
+                    </a>
+                  ) : (
+                    job.org
+                  )}
+                </h3>
+                <ol class="roles">
+                  {job.roles.map((r) => (
+                    <li class="role">
+                      <div class="role-head">
+                        <p class="role-title">
+                          {r.title}
+                          {(r.team || r.location) && <span class="role-meta"> · {r.team ?? r.location}</span>}
+                        </p>
+                        <p class="dates">
+                          {r.start} to {r.end}
+                        </p>
+                      </div>
+                      <ul class="points">
+                        {r.points.map((p) => (
+                          <li set:html={rich(p)} />
+                        ))}
+                      </ul>
+                    </li>
+                  ))}
+                </ol>
+              </li>
+            ))
+          }
+        </ol>
+
+        <h3 class="subhead eyebrow">Earlier</h3>
+        <ul class="earlier">
+          {
+            earlier.map((e) => (
+              <li>
+                <p class="role-head">
+                  <span class="role-title">
+                    {e.org} <span class="role-meta">· {e.title}</span>
+                  </span>
+                  <span class="dates">{e.when}</span>
+                </p>
+                <p class="earlier-text">{e.text}</p>
+              </li>
+            ))
+          }
+        </ul>
+      </Section>
+
+      <Section id="skills" title="Skills">
+        <dl class="skills">
+          {
+            skills.map((g) => (
+              <div class="skill-group">
+                <dt class="eyebrow">{g.label}</dt>
+                <dd>
+                  <ul class="tags">
+                    {g.items.map((i) => (
+                      <li class="tag neutral">{i}</li>
+                    ))}
+                  </ul>
+                </dd>
+              </div>
+            ))
+          }
+        </dl>
+      </Section>
+
+      <Section id="beyond" title="Beyond the day job">
+        <ul class="beyond">
+          {
+            beyond.map((b) => (
+              <li>
+                <h3>{b.title}</h3>
+                <p>{b.detail}</p>
+              </li>
+            ))
+          }
+        </ul>
+      </Section>
+
+      <Section id="contact" title="Contact">
+        <div class="contact">
+          <p class="contact-lede">
+            Email is the fastest way to reach me. I'm happy to talk about database drivers, Python performance,
+            Rust in Python, or agent infrastructure. My résumé is available on request.
+          </p>
+          <p class="contact-actions">
+            <a class="button primary" href={`mailto:${person.email}`}><Icon name="mail" size={16} /> {person.email}</a>
+            <a class="button" href={person.linkedin} target="_blank" rel="noopener"><Icon name="linkedin" size={16} /> LinkedIn</a>
+            <a class="button" href={person.github} target="_blank" rel="noopener"><Icon name="github" size={16} /> GitHub</a>
+          </p>
+        </div>
+      </Section>
+
+      <footer class="footer">
+        <p>
+          Built with <a class="link" href="https://astro.build" target="_blank" rel="noopener">Astro</a>,{" "}
+          set in <a class="link" href="https://vercel.com/font" target="_blank" rel="noopener">Geist</a>, and served{" "}
+          from{" "}
+          <a class="link" href="https://github.com/bewithgaurav/bewithgaurav.github.io" target="_blank" rel="noopener"
+            >GitHub Pages</a
+          >. No trackers.
+        </p>
+      </footer>
+    </main>
+  </div>
+
+  <script>
+    const sections = [...document.querySelectorAll<HTMLElement>("main section[id]")];
+    const links = [...document.querySelectorAll<HTMLAnchorElement>(".nav a")];
+    let queued = false;
+
+    const update = () => {
+      queued = false;
+      const root = document.documentElement;
+      let current = sections[0];
+      for (const s of sections) if (s.getBoundingClientRect().top <= innerHeight * 0.35) current = s;
+      if (innerHeight + scrollY >= root.scrollHeight - 4) current = sections[sections.length - 1];
+      for (const a of links) {
+        if (a.hash === `#${current?.id}`) a.setAttribute("aria-current", "location");
+        else a.removeAttribute("aria-current");
+      }
+    };
+
+    const schedule = () => {
+      if (!queued) requestAnimationFrame(update);
+      queued = true;
+    };
+
+    addEventListener("scroll", schedule, { passive: true });
+    addEventListener("resize", schedule);
+    update();
+  </script>
+</Base>
+
+<style>
+  .shell {
+    max-width: 75rem;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+  }
+
+  @media (min-width: 1024px) {
+    .shell {
+      display: grid;
+      grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+      gap: 5rem;
+      padding: 0 3rem;
+    }
+  }
+
+  .intro {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 2.5rem;
+    padding-top: 4.5rem;
+  }
+
+  @media (min-width: 1024px) {
+    .intro {
+      min-height: 100vh;
+      min-height: 100dvh;
+      padding-block: 5rem 3rem;
+    }
+  }
+
+  @media (min-width: 1024px) and (min-height: 720px) {
+    .intro {
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      height: 100dvh;
+    }
+  }
+
+  :global(.avatar) {
+    width: 4.5rem;
+    height: 4.5rem;
+    margin-bottom: 1.75rem;
+    border-radius: 999px;
+    object-fit: cover;
+    box-shadow:
+      0 0 0 1px var(--border),
+      0 0 0 5px var(--bg),
+      0 0 0 6px var(--border);
+  }
+
+  h1 {
+    margin-top: 0.5rem;
+    font-size: clamp(2.5rem, 5vw, 3.5rem);
+    font-weight: 650;
+    line-height: 1.05;
+    letter-spacing: -0.035em;
+  }
+
+  .tagline {
+    margin-top: 1rem;
+    font-size: clamp(1.125rem, 2vw, 1.3125rem);
+    font-weight: 500;
+    line-height: 1.4;
+    letter-spacing: -0.01em;
+  }
+
+  .lede {
+    max-width: 26rem;
+    margin-top: 1rem;
+    color: var(--muted);
+  }
+
+  .nav {
+    display: none;
+  }
+
+  @media (min-width: 1024px) {
+    .nav {
+      display: block;
+      margin-top: 3.5rem;
+    }
+  }
+
+  .nav ol {
+    display: grid;
+    gap: 0.125rem;
+  }
+
+  .nav a {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.3rem 0;
+    font-family: var(--font-mono);
+    font-size: 0.8125rem;
+    color: var(--faint);
+    transition: color 0.2s var(--ease);
+  }
+
+  .nav a::before {
+    content: "";
+    width: 1.25rem;
+    height: 1px;
+    background: currentColor;
+    transition:
+      width 0.25s var(--ease),
+      background 0.2s var(--ease);
+  }
+
+  .nav a:hover,
+  .nav a[aria-current] {
+    color: var(--text);
+  }
+
+  .nav a[aria-current]::before {
+    width: 2.75rem;
+    background: var(--accent);
+  }
+
+  .intro-foot {
+    display: grid;
+    gap: 1rem;
+  }
+
+  .socials {
+    display: flex;
+    align-items: center;
+    gap: 1.25rem;
+  }
+
+  .socials a {
+    display: inline-flex;
+    color: var(--muted);
+    transition: color 0.2s var(--ease);
+  }
+
+  .socials a:hover {
+    color: var(--accent);
+  }
+
+  main {
+    min-width: 0;
+    padding-bottom: 4rem;
+  }
+
+  @media (min-width: 1024px) {
+    main {
+      padding-top: 1.5rem;
+    }
+  }
+
+  .prose {
+    display: grid;
+    gap: 1.125rem;
+    color: var(--muted);
+  }
+
+  .prose p:first-child {
+    color: var(--text);
+  }
+
+  .section-lede {
+    margin-bottom: 1.5rem;
+    color: var(--muted);
+  }
+
+  .stack {
+    margin-top: 2.25rem;
+    padding: 1.25rem 1.5rem;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    background: var(--surface);
+  }
+
+  .stack ol {
+    display: grid;
+    margin-top: 0.875rem;
+  }
+
+  .stack li {
+    display: grid;
+    grid-template-columns: 4.5rem 1fr;
+    gap: 1rem;
+    padding: 0.625rem 0;
+    border-top: 1px dashed var(--border);
+    font-size: 0.875rem;
+  }
+
+  .layer {
+    font-family: var(--font-mono);
+    font-weight: 500;
+    color: var(--accent);
+  }
+
+  .items {
+    color: var(--muted);
+  }
+
+  .scale {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1px;
+    margin-top: 2.25rem;
+    overflow: hidden;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    background: var(--border);
+  }
+
+  @media (min-width: 640px) {
+    .scale {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
+
+  .scale li {
+    display: flex;
+  }
+
+  .stat {
+    display: grid;
+    gap: 0.375rem;
+    align-content: start;
+    width: 100%;
+    padding: 1.125rem 1.25rem;
+    background: var(--surface);
+    transition: background 0.2s var(--ease);
+  }
+
+  a.stat:hover {
+    background: var(--surface-hover);
+  }
+
+  a.stat:hover .stat-value {
+    color: var(--accent);
+  }
+
+  .stat-value {
+    font-size: 1.625rem;
+    font-weight: 600;
+    line-height: 1;
+    letter-spacing: -0.03em;
+    font-variant-numeric: tabular-nums;
+    transition: color 0.2s var(--ease);
+  }
+
+  .stat-label {
+    font-size: 0.8125rem;
+    line-height: 1.4;
+    color: var(--muted);
+  }
+
+  .asof {
+    margin-top: 0.75rem;
+    text-transform: none;
+    letter-spacing: 0;
+  }
+
+  .stack-list {
+    display: grid;
+    gap: 1rem;
+  }
+
+  .timeline {
+    display: grid;
+    gap: 2.75rem;
+  }
+
+  .org {
+    font-size: 1.0625rem;
+    font-weight: 600;
+  }
+
+  .roles {
+    display: grid;
+    gap: 1.5rem;
+    margin-top: 0.875rem;
+    padding-left: 1.25rem;
+    border-left: 1px solid var(--border);
+  }
+
+  .role {
+    position: relative;
+  }
+
+  .role::before {
+    content: "";
+    position: absolute;
+    left: calc(-1.25rem - 4px);
+    top: 0.55em;
+    width: 7px;
+    height: 7px;
+    border-radius: 999px;
+    background: var(--bg);
+    box-shadow: 0 0 0 1.5px var(--border-strong);
+  }
+
+  .job:first-child .role:first-child::before {
+    background: var(--accent);
+    box-shadow: 0 0 0 4px var(--accent-soft);
+  }
+
+  .role-head {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 0.25rem 1rem;
+  }
+
+  .role-title {
+    font-weight: 500;
+  }
+
+  .role-meta {
+    font-weight: 400;
+    color: var(--muted);
+  }
+
+  .dates {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--faint);
+    white-space: nowrap;
+  }
+
+  .points {
+    display: grid;
+    gap: 0.625rem;
+    margin-top: 0.75rem;
+    font-size: 0.9375rem;
+    color: var(--muted);
+  }
+
+  .points li {
+    position: relative;
+    padding-left: 1.125rem;
+  }
+
+  .points li::before {
+    content: "";
+    position: absolute;
+    left: 0.125rem;
+    top: 0.75em;
+    width: 0.375rem;
+    height: 1px;
+    background: var(--border-strong);
+  }
+
+  .subhead {
+    margin-top: 3rem;
+    margin-bottom: 1rem;
+  }
+
+  .earlier {
+    display: grid;
+    gap: 1.25rem;
+  }
+
+  .earlier-text {
+    margin-top: 0.25rem;
+    font-size: 0.9375rem;
+    color: var(--muted);
+  }
+
+  .skills {
+    display: grid;
+    gap: 1.5rem;
+    margin: 0;
+  }
+
+  .skill-group {
+    display: grid;
+    gap: 0.625rem;
+  }
+
+  @media (min-width: 640px) {
+    .skill-group {
+      grid-template-columns: 9.5rem 1fr;
+      gap: 1rem;
+    }
+
+    .skill-group dt {
+      padding-top: 0.3rem;
+    }
+  }
+
+  .skills dd {
+    margin: 0;
+  }
+
+  .beyond {
+    display: grid;
+    gap: 1.25rem;
+  }
+
+  .beyond li {
+    display: grid;
+    gap: 0.25rem;
+    padding-bottom: 1.25rem;
+    border-bottom: 1px dashed var(--border);
+  }
+
+  .beyond li:last-child {
+    border-bottom: 0;
+  }
+
+  .beyond h3 {
+    font-size: 1rem;
+    font-weight: 500;
+  }
+
+  .beyond p {
+    font-size: 0.9375rem;
+    color: var(--muted);
+  }
+
+  .contact {
+    display: grid;
+    gap: 1.5rem;
+  }
+
+  .contact-lede {
+    color: var(--muted);
+  }
+
+  .contact-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+  }
+
+  .button {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.625rem 1rem;
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    background: var(--surface);
+    font-size: 0.875rem;
+    font-weight: 500;
+    transition:
+      border-color 0.2s var(--ease),
+      color 0.2s var(--ease),
+      transform 0.2s var(--ease);
+  }
+
+  .button:hover {
+    border-color: var(--border-strong);
+    color: var(--accent);
+  }
+
+  .button:active {
+    transform: translateY(1px);
+  }
+
+  .button.primary {
+    border-color: transparent;
+    background: var(--text);
+    color: var(--bg);
+  }
+
+  .button.primary:hover {
+    background: var(--accent);
+    color: var(--bg);
+  }
+
+  .footer {
+    margin-top: 4rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--border);
+    font-size: 0.8125rem;
+    color: var(--faint);
+  }
+
+  .footer .link {
+    color: var(--muted);
+    font-weight: 400;
+  }
+
+  @media (min-width: 1024px) and (max-height: 920px) {
+    .intro {
+      padding-block: 3.5rem 2.5rem;
+    }
+
+    :global(.avatar) {
+      width: 3.5rem;
+      height: 3.5rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .nav {
+      margin-top: 2rem;
+    }
+
+    .nav a {
+      padding-block: 0.2rem;
+    }
+  }
+
+  @media (min-width: 1024px) and (max-height: 820px) {
+    .lede {
+      display: none;
+    }
+  }
+</style>

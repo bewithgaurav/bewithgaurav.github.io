@@ -1,0 +1,56 @@
+---
+interface Props {
+  id: string;
+  title: string;
+  note?: string;
+}
+
+const { id, title, note } = Astro.props;
+---
+
+<section id={id} aria-labelledby={`${id}-title`}>
+  <header>
+    <h2 id={`${id}-title`}>{title}</h2>
+    {note && <p class="eyebrow">{note}</p>}
+  </header>
+  <slot />
+</section>
+
+<style>
+  section {
+    padding-block: 4.5rem 1rem;
+  }
+
+  header {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: 1.75rem;
+    padding-bottom: 0.875rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  h2 {
+    font-size: 1.125rem;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+  }
+
+  @media (max-width: 1023px) {
+    section {
+      padding-block: 3.5rem 0.5rem;
+    }
+
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 2;
+      margin-inline: -1.5rem;
+      padding: 0.875rem 1.5rem;
+      background: color-mix(in srgb, var(--bg) 92%, transparent);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+    }
+  }
+</style>
