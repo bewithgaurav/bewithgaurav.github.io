@@ -78,7 +78,7 @@ export const GET: APIRoute = async () => {
         h(
           "div",
           { display: "flex", justifyContent: "space-between", fontFamily: "Geist Mono", fontSize: 22, color: muted },
-          h("div", {}, "mssql-python · SQLAlchemy · Django · Rust"),
+          h("div", {}, "Python · C++ · Django · AI agents"),
           h("div", { color: accent }, person.url.replace("https://", "")),
         ),
       ),

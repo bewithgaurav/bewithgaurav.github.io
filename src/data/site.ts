@@ -11,9 +11,8 @@ export const person = {
   org: "Microsoft",
   team: "Azure SQL Drivers",
   location: "Pune, India",
-  tagline: "Systems engineer at the Python, C++ and Rust boundary.",
-  intro:
-    "Core maintainer of mssql-python, Microsoft's open-source Python driver for SQL Server. I make database connectivity measurably faster, and I ship production AI.",
+  tagline: "Python and C++ engineer, from database drivers to production AI.",
+  intro: "Core maintainer of mssql-python, Microsoft's open-source Python driver for SQL Server.",
   email: "gauravsharma2696@gmail.com",
   github: "https://github.com/bewithgaurav",
   linkedin: "https://www.linkedin.com/in/bewithgaurav",
@@ -23,31 +22,45 @@ export const person = {
 const repo = {
   mssqlPython: "https://github.com/microsoft/mssql-python",
   mssqlDjango: "https://github.com/microsoft/mssql-django",
-  mssqlRs: "https://github.com/microsoft/mssql-rs",
 };
 
 export const about = [
-  "I'm a systems engineer with eight years across performance-critical infrastructure, backend product and customer-facing R&D. Today I'm on Microsoft's Azure SQL Drivers team, where I'm a core maintainer of mssql-python: Microsoft's open-source Python client for SQL Server, built on a C++ core. I took it from pre-release to 1.0 GA, and it now sees over 2.7M downloads a month.",
-  "My work centres on latency and throughput at the Python, C++ and Rust boundary, and the driver speedups below (21x write path, 21.8x hot loop, 75x bulk load) were each measured under controlled benchmarking. I also ship AI: a production multi-agent system at Microsoft, and a real-time voice AI assistant outside work.",
-  "Before Microsoft: fintech backend at Fyle, production LLM features at Letterdrop in 2022, and four years of automotive sound-quality R&D at HARMAN, including a year onsite in Japan. Looking back, my career has been a steady descent down the stack: frontend, backend, C++ and PyBind11, the CPython C API, and now Rust and TDS.",
+  "Eight years in, my work now sits where Python meets C++. I took mssql-python from pre-release to 1.0 GA, I keep making it faster, and it sees ~3M downloads a month.",
+  "I also ship AI, from a production multi-agent system at Microsoft to a real-time voice assistant of my own. Before Microsoft: fintech backend at Fyle, LLM features at Letterdrop in 2022, and four years of sound-quality R&D at HARMAN, including a year in Japan.",
 ];
 
 export const stack = [
-  { layer: "Python", items: ["mssql-python API", "SQLAlchemy", "Django"] },
-  { layer: "C++", items: ["CPython C API", "PyBind11", "ODBC"] },
-  { layer: "Rust", items: ["TDS core", "Tokio", "PyO3"] },
-  { layer: "Wire", items: ["TDS", "SQL Server"] },
+  {
+    layer: "Python",
+    items: ["mssql-python", "SQLAlchemy", "FastAPI", "cibuildwheel"],
+    where: "Microsoft, open source, Buddy",
+  },
+  {
+    layer: "C++",
+    items: ["CPython C API", "PyBind11", "ODBC", "CMake"],
+    where: "Microsoft",
+  },
+  {
+    layer: "Django / Flask",
+    items: ["Django", "Flask", "PostgreSQL", "SQL Server"],
+    where: "Fyle, HappyFox, HARMAN, Letterdrop, mssql-django",
+  },
+  {
+    layer: "AI",
+    items: ["Copilot Studio", "MCP", "Azure OpenAI Realtime", "OpenAI APIs", "Whisper"],
+    where: "Microsoft, Buddy, Letterdrop",
+  },
 ];
 
 export const scaleAsOf = "Nov 2026";
 
 export const scale = [
-  { value: "2.7M+", label: "PyPI downloads a month", href: "https://pypi.org/project/mssql-python/" },
+  { value: "~3M", label: "PyPI downloads a month, 3.7M at peak", href: "https://pypi.org/project/mssql-python/" },
   { value: "1.0", label: "GA, taken from pre-release", href: `${repo.mssqlPython}/releases` },
   { value: "33", label: "releases, 19 of them since GA", href: `${repo.mssqlPython}/releases` },
   { value: "14 days", label: "median gap between releases since GA" },
-  { value: "221", label: "merged PRs, Microsoft SQL driver repos" },
-  { value: "298", label: "PRs reviewed for other contributors" },
+  { value: "240+", label: "merged pull requests on GitHub" },
+  { value: "300+", label: "pull requests reviewed for other contributors" },
 ];
 
 export type Benchmark = {
@@ -80,16 +93,6 @@ export const benchmarks: Benchmark[] = [
     detail:
       "Profiling showed row construction dominated, so I rewrote it from PyBind11 to the CPython C API. End to end, a 1.2M-row fetch went from 8.33s to 3.31s (2.5x).",
     link: { label: "mssql-python#320", href: `${repo.mssqlPython}/pull/320` },
-  },
-  {
-    name: "Bulk copy",
-    metric: "4M-row CSV load, against pyodbc executemany",
-    before: { value: 55 * 60, label: "55 h" },
-    after: { value: 44, label: "44 min" },
-    speedup: "75x",
-    detail:
-      "I architected the async/sync interop bridge that drives bulk copy through a Rust TDS core on Tokio, using a streaming row-by-row path with direct-to-wire serialization.",
-    link: { label: "mssql-rs/mssql-py-core", href: `${repo.mssqlRs}/tree/main/mssql-py-core` },
   },
   {
     name: "Schema reflection",
@@ -332,10 +335,10 @@ export const earlier = [
 ];
 
 export const skills = [
-  { label: "Languages", items: ["Python", "C++", "Rust", "SQL", "JavaScript"] },
+  { label: "Languages", items: ["Python", "C++", "SQL", "JavaScript"] },
   {
     label: "Systems",
-    items: ["CPython C API", "PyBind11", "PyO3", "ODBC", "TDS", "Tokio", "Concurrency and GIL management", "Memory safety"],
+    items: ["CPython C API", "PyBind11", "ODBC", "Concurrency and GIL management", "Memory safety"],
   },
   {
     label: "Performance and quality",

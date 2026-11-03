@@ -90,7 +90,10 @@ const rich = (s: string) => escape(s).replace(/\*\*(.+?)\*\*/g, "<strong>$1</str
               stack.map((s) => (
                 <li>
                   <span class="layer">{s.layer}</span>
-                  <span class="items">{s.items.join(" · ")}</span>
+                  <span class="items">
+                    {s.items.join(" · ")}
+                    <span class="where">{s.where}</span>
+                  </span>
                 </li>
               ))
             }
@@ -117,7 +120,7 @@ const rich = (s: string) => escape(s).replace(/\*\*(.+?)\*\*/g, "<strong>$1</str
 
       <Section id="benchmarks" title="Benchmarks" note="lower is better">
         <p class="section-lede">
-          Four speedups I shipped, each measured on a stated workload, with the code linked.
+          Three speedups I shipped, each measured on a stated workload, with the code linked.
         </p>
         <div class="stack-list">
           {benchmarks.map((b) => <Bench bench={b} />)}
@@ -228,8 +231,8 @@ const rich = (s: string) => escape(s).replace(/\*\*(.+?)\*\*/g, "<strong>$1</str
       <Section id="contact" title="Contact">
         <div class="contact">
           <p class="contact-lede">
-            Email is the fastest way to reach me. I'm happy to talk about database drivers, Python performance,
-            Rust in Python, or agent infrastructure. My résumé is available on request.
+            Email is the fastest way to reach me. I'm happy to talk about database drivers, Python and C++
+            performance, Django, or agent infrastructure. My résumé is available on request.
           </p>
           <p class="contact-actions">
             <a class="button primary" href={`mailto:${person.email}`}><Icon name="mail" size={16} /> {person.email}</a>
@@ -464,7 +467,7 @@ const rich = (s: string) => escape(s).replace(/\*\*(.+?)\*\*/g, "<strong>$1</str
 
   .stack li {
     display: grid;
-    grid-template-columns: 4.5rem 1fr;
+    grid-template-columns: 7.5rem 1fr;
     gap: 1rem;
     padding: 0.625rem 0;
     border-top: 1px dashed var(--border);
@@ -479,6 +482,21 @@ const rich = (s: string) => escape(s).replace(/\*\*(.+?)\*\*/g, "<strong>$1</str
 
   .items {
     color: var(--muted);
+  }
+
+  .where {
+    display: block;
+    margin-top: 0.125rem;
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--faint);
+  }
+
+  @media (max-width: 479px) {
+    .stack li {
+      grid-template-columns: 1fr;
+      gap: 0.25rem;
+    }
   }
 
   .scale {
