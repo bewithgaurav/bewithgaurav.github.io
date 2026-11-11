@@ -21,6 +21,9 @@ export const person = {
   url: "https://bewithgaurav.github.io",
 };
 
+// Cookie-free page counts; dashboard at https://<code>.goatcounter.com
+export const goatcounterCode = "bewithgaurav";
+
 const repo = {
   mssqlPython: "https://github.com/microsoft/mssql-python",
   mssqlDjango: "https://github.com/microsoft/mssql-django",

@@ -36,6 +36,12 @@ number, technology or claim of scope the inventory does not support. Numbers are
 
 Do not publish the résumé PDF here: it carries contact details that stay private.
 
+## Analytics
+
+[GoatCounter](https://www.goatcounter.com): one async script, no cookies, no consent banner. The site code is
+`goatcounterCode` in `src/data/site.ts`; the dashboard is at `https://<code>.goatcounter.com`. Visits from
+localhost aren't counted.
+
 ## Deploy
 
 Every push to `master` builds and deploys through GitHub Actions (`.github/workflows/deploy.yml`) to
